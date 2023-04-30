@@ -3,6 +3,7 @@ import express from "express";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
+import handlebars from 'express-handlebars';
 import initializeStrategies from "./config/passport.config.js";
 
 import productsRouter from './routes/products.router.js';
@@ -13,8 +14,7 @@ import cartRouter from './routes/cart.router.js';
 import __dirname from './utils.js';
 import config from "./config/config.js";
 import { addLoger, levels } from './middleware/logger.js';
-import handlebars from 'express-handlebars';
-// import cors from 'cors';
+import cors from 'cors';
 
 const app = express();
 const PORT = config.app.PORT;
@@ -23,7 +23,7 @@ const PORT = config.app.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
-// app.use(cors);
+app.use(cors());
 app.use(session({
     store: MongoStore.create({
         mongoUrl: config.mongo.URL,
@@ -52,6 +52,11 @@ app.use('/carts', cartRouter);
 app.use('/products', productsRouter)
 app.use('/sessions', sessionsRouter);
 app.use('/', viewsRouter);
+
+app.get('/current', (req, res) => {
+    console.log(req.session);
+    res.send(req.session.user);
+})
 
 //App Use - LOGGER 
 app.use(addLoger);

@@ -4,12 +4,12 @@ import { cartService, productsService } from "../dao/index.js";
 const productsGetAll = async (req, res) => {
 
     // el problema lo tengo con esto que no lee el .cart
-    const cartId = req.session.user.cart;                    
-    const cart = await cartService.getCartById(cartId);
-    products = products.map(product => {
-        const exists = cart.products.some(v => v._id.toSting() === product._id.toSting());
-        return { ...product, isValidToAdd: !exists };
-    });
+    // const cartId = req.session.user.cart;                    
+    // const cart = await cartService.getCartById(cartId);
+    // products = products.map(product => {
+    //     const exists = cart.products.some(v => v._id.toSting() === product._id.toSting());
+    //     return { ...product, isValidToAdd: !exists };
+    // });
     // ----------------------
 
     
@@ -25,7 +25,7 @@ const productsGetAll = async (req, res) => {
     };
 
     
-    res.render('home', { products, css:'styles', paginationData });
+    res.render('home', { products, paginationData });
 }
 
 const createProduct = (req, res) => {
@@ -47,11 +47,11 @@ const cart = async (req, res) => {
 // ------------------------------------------------------------------
 
 const login = (req, res) => {
-    res.render('login');
+    res.render('login', {css: 'login'});
 };
 
 const register = (req, res) => {
-    res.render('register');
+    res.render('register', {css: 'register'});
 };
 
 const profile = (req, res) => {

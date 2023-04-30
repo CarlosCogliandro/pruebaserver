@@ -1,60 +1,20 @@
-<h1>Regístrate</h1>
-
-<form
-  style="display: flex; flex-direction: column; padding: 10px; gap: 10px;"
-  id="registerForm"
->
-  <div>
-    <label>Nombre</label>
-    <input name="first_name" />
-  </div>
-
-  <div>
-    <label>Apellido</label>
-    <input name="last_name" />
-  </div>
-
-  <!-- <div>
-        <label>Ingrese su edad</label>
-        <input type="number" name="age"/>
-      </div> -->
-
-  <div>
-    <label>Correo electrónico</label>
+<div class="login">
+  <h1>Registrate!</h1>
+  <br>
+  <form id="registerForm"></form>
+    <input name="first_name" placeholder="Nombre"/>
+    <input name="last_name" placeholder="Apellido"/>
     <input name="email" placeholder="correo@correo.com" />
+    <input type="file" name="avatar"/>
+    <input type="password" name="password" minlength="8" required placeholder="Password"/>
+    <input type="submit" class="btn btn-primary btn-block btn-large"/>
+  </form>
+
+<br>
+<p class="logueate">¡Ya estás registrado?</p>
+  <div class="botonesIngreso">
+      <a class="btn btn-primary btn-block btn-medium" href="/">Logueate :)</a>
   </div>
 
-  <!-- <div>
-        <label>Ingrese su numero telefonico</label>
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Ej: +5491231234567"
-          pattern="[+][0-9]{8,20}"
-          required
-        />
-      </div> -->
-
-  <!-- <div>
-        <label>Ingrese su dirección</label>
-        <input type="text" name="address" />
-      </div> -->
-
-  <div>
-    <label>Imagen de perfil</label>
-    <input type="file" name="avatar" />
-  </div>
-
-  <div>
-    <label>Contraseña</label>
-    <input type="password" name="password" minlength="8" required />
-  </div>
-
-  <div>
-    <input type="submit" />
-  </div>
-</form>
-
-<p>¿Ya estás registrado?<a href="/">Logueate :)</a></p>
-
+</div>
 <script src="/js/register.js"></script>

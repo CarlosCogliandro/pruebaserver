@@ -16,10 +16,7 @@ const register = async (req, res) => {
         const user = {
             first_name,
             last_name,
-            // age,
             email,
-            // phone,
-            // address,
             password: hashedPassword,
             cart: cart._id,
             avatar: `${req.protocol}://${req.hostname}:${process.env.PORT}/img/${file.filename}`
@@ -54,7 +51,7 @@ const gitHubCallback = async (req, res) => {
         email: user.email,
         role: user.role
     }
-    res.send({ status: "success", message: "Logueado con github!" })
+    res.send({ status: "success", message: "Logueado con Git-Hub!" })
 };
 
 const googleCallback = async (req, res) => {
@@ -65,6 +62,16 @@ const googleCallback = async (req, res) => {
         role: user.role
     }
     res.send({ status: "success", message: "Logueado con Google!" })
+};
+
+const facebookCallBack = async (req, res) => {
+    const user = req.user;
+    req.session.user = {
+        id: user._id,
+        email: user.email,
+        role: user.role
+    }
+    res.send({ status: "success", message: "Logueado con Facebook!" })
 };
 
 const logintoken = async (req, res) => {
@@ -101,6 +108,7 @@ export default {
     loginFail,
     gitHubCallback,
     googleCallback,
+    facebookCallBack,
     logintoken,
     current
 }

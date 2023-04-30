@@ -1,28 +1,37 @@
-<h1>Logueate</h1>
-<form
-  style="display: flex; flex-direction: column; padding: 10px; gap: 10px;"
-  id="loginForm"
->
-  <div>
-    <label>Correo electrónico</label>
-    <input name="email" />
+<div class="login">
+  <h1>Bienvenido!</h1>
+  <br />
+  <form id="loginForm">
+    <input type="text" name="email" placeholder="E-mail" required="required" />
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      required="required"
+    />
+    <button
+      type="submit"
+      class="btn btn-primary btn-block btn-large"
+    >Login</button>
+  </form>
+  <br />
+
+  <div class="registrarse">
+    <p style="padding-right: 20px; color: white">¿No tienes cuenta?</p>
+      <a style="text-decoration: none;" href="/register">Regístrate :)</a>
   </div>
-
-  <div>
-    <label>Contraseña</label>
-    <input type="password" name="password" />
+  <p class="logueate">O conectate mediate:</p>
+  <div class="botonesIngreso">
+    <a href="/sessions/github" style="text-decoration: none;"><button
+        class="btn btn-primary btn-block btn-medium"
+      >Git-Hub</button></a>
+    <a href="/sessions/google" style="text-decoration: none;"><button
+        class="btn btn-primary btn-block btn-medium"
+      >Google</button></a>
+    <a href="/sessions/facebook" style="text-decoration: none;"><button
+        class="btn btn-primary btn-block btn-medium"
+      >Facebook</button></a>
   </div>
-
-  <div>
-    <input type="submit" />
-  </div>
-</form>
-
-<p>¿No estás logueado? <a href="/register">Regístrate :)</a></p>
-
-<p>Tambien puedes loguearte con:
-  <a href="/sessions/github"><button>Git-Hub</button></a></p>
-<p>Tambien puedes loguearte con:
-  <a href="/sessions/google"><button>Google</button></a></p>
+</div>
 
 <script src="/js/login.js"></script>
