@@ -22,7 +22,7 @@ const initializeStrategies = () => {
         return done(null, user)
     }))
 
-    // Inicio de sesion por registro normal
+    // Inicio de sesion por registro
     passport.use("register", new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
         try {
             const user = await usersService.getBy({ email });
@@ -47,8 +47,8 @@ const initializeStrategies = () => {
 
     // Inicio de sesion con Git-Hub
     passport.use('github', new GitHubStrategy({
-        clientID: "Iv1.bcc2d73aec10ea6e",
-        clientSecret: config.passport.PASSPORT_SECRET,
+        clientID: config.github.GITHUB_USER,
+        clientSecret: config.github.GITHUB_PWD,
         callbackURL: "http://localhost:8080/sessions/githubcallback"
     }, async (accessToken, refreshToken, profile, done) => {
         try {
@@ -71,8 +71,8 @@ const initializeStrategies = () => {
 
     // Inicio de sesion con Google
     passport.use('google', new GoogleStrategy({
-        clientID: '483438623181-crhf92lii9if07322tpkd858pk22mo0o.apps.googleusercontent.com',
-        clientSecret: config.passport.GOOGLE_SECRET,
+        clientID: config.google.GOOGLE_USER,
+        clientSecret: config.google.GOOGLE_PWD,
         callbackURL: 'http://localhost:8080/sessions/googlecallback',
     }, async (issuer, profile, done) => {
         const firstName = profile.name.givenName;
@@ -96,11 +96,11 @@ const initializeStrategies = () => {
 
     // Inicio de sesion con Facebook
     passport.use('facebook', new FacebookStrategy({
-        clientID: '548039277484345',
-        clientSecret: '5bb73aeebf3a757de00fd23a9b2b538c',
+        clientID: config.facebook.FACEBOOK_USER,
+        clientSecret: config.facebook.FACEBOOK_PWD,
         callbackURL: 'http://localhost:8080/sessions/facebookcallback',
         // profileFields: ['displayName', 'email'],
-      }, async (accessToken, refreshToken, profile, done) => {
+    }, async (accessToken, refreshToken, profile, done) => {
         const id = profile.id
         const firstName = profile.name.givenName;
         const lastName = profile.name.familyName;
@@ -120,9 +120,9 @@ const initializeStrategies = () => {
         else {
             return done(null, user)
         }
-      }));
-      
-      
+    }));
+
+
     passport.serializeUser((user, done) => {
         done(null, user._id)
     })

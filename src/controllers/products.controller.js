@@ -17,8 +17,8 @@ const createProduct = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-    const videogames = await productsService.getall();
-    res.send({ status: "success", payload: videogames })
+    const products = await productsService.getall();
+    res.send({ status: "success", payload: products })
 }
 
 export default {

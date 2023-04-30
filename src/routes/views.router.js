@@ -7,9 +7,9 @@ const router = Router();
 
 // ------------------------------------------------
 
-router.get('/home', /*executePolicies(["USER", "ADMIN"]),*/ viewsController.productsGetAll);
+router.get('/home', executePolicies(["USER", "ADMIN"]), viewsController.productsGetAll);
 router.get('/productcreator', viewsController.createProduct);
-router.get('/cart', /*executePolicies(["USER", "ADMIN"]),*/ viewsController.cart);
+router.get('/cart', executePolicies(["USER", "ADMIN"]), viewsController.cart);
 
 // ------------------------------------------------
 

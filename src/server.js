@@ -1,10 +1,13 @@
-
 import express from "express";
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import handlebars from 'express-handlebars';
+
 import initializeStrategies from "./config/passport.config.js";
+import { addLoger, levels } from './middleware/logger.js';
 
 import productsRouter from './routes/products.router.js';
 import sessionsRouter from './routes/sessions.router.js';
@@ -13,8 +16,6 @@ import cartRouter from './routes/cart.router.js';
 
 import __dirname from './utils.js';
 import config from "./config/config.js";
-import { addLoger, levels } from './middleware/logger.js';
-import cors from 'cors';
 
 const app = express();
 const PORT = config.app.PORT;
@@ -23,6 +24,7 @@ const PORT = config.app.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
+app.use(cookieParser())
 app.use(cors());
 app.use(session({
     store: MongoStore.create({

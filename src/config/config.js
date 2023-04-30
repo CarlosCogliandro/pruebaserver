@@ -15,11 +15,18 @@ export default {
     },
     session: {
         SECRET2: process.env.SESSION_SECRET,
-
     },
-    passport: {
-        PASSPORT_SECRET: process.env.PASSPORT_SECRET,
-        GOOGLE_SECRET: process.env.GOOGLE_SECRET
+    github: {
+        GITHUB_USER: process.env.GITHUB_USER,
+        GITHUB_PWD: process.env.GITHUB_PWD,
+    },
+    google: {   
+        GOOGLE_USER: process.env.GOOGLE_USER,
+        GOOGLE_PWD: process.env.GOOGLE_PWD
+    },
+    facebook: {
+        FACEBOOK_USER: process.env.FACEBOOK_USER, 
+        FACEBOOK_PWD: process.env.FACEBOOK_PWD
     },
     email: {
         ADMIN_EMAIL: process.env.ADMIN_EMAIL
@@ -31,5 +38,5 @@ export default {
     superAdmin: {
         SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL,
         SUPER_ADMIN_PWD: process.env.SUPER_ADMIN_PWD
-    }
+    },
 }
