@@ -29,8 +29,17 @@ const userSchema = new mongoose.Schema({
     cart: {
         type: mongoose.SchemaTypes.ObjectId,
         ref:'Carts'
-    }
-})
+    },
+    // library: [
+    //     {
+    //         product: {
+    //             type: mongoose.SchemaType.ObjectId,
+    //             ref: 'Products'
+    //         },
+    //         purchase: Date
+    //     }
+    // ] 
+});
 
 const userModel = mongoose.model(collection, userSchema);
 

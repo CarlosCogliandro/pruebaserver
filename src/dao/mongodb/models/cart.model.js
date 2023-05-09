@@ -7,7 +7,7 @@ const schema = new mongoose.Schema({
         {
             _id: {
                 type: mongoose.SchemaTypes.ObjectId,
-                ref: 'products'
+                ref: 'Products'
             }
         }
     ]

@@ -23,6 +23,7 @@ const sendEmail = async (to, subject, message, attachment) => {
     };
     const info = await transporter.sendMail(mailOptions);
     console.log(`Envío de email: ${JSON.stringify(info)}`);
+    res.send({ status: 'success', message: 'Correo enviado exitosamente' });
   } catch (error) {
     console.error(error);
   }

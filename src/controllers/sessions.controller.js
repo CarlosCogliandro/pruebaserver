@@ -1,31 +1,32 @@
 import { createHash, validatePassword } from "../services/auth.js";
 import jwt from "jsonwebtoken";
 import config from '../config/config.js';
-import { cartService, usersService } from "../dao/index.js";
+import { cartsService, usersService } from "../dao/index.js";
 
 const register = async (req, res) => {
     try {
         const file = req.file;
-        if (!file) return res.status(500).send({ status: 'error', error: 'Error al cargar el archivo' })
+        if (!file) return res.status(500).send({ status: 'error', error: 'Error al cargar el archivo' });
         const { first_name, last_name, email, password } = req.body;
         if (!first_name || !last_name || !email || !password) return res.status(400).send({ status: "error", error: "Valores incompletos" });
         const exists = await usersService.getBy({ email });
         if (exists) return res.status(400).send({ status: "error", error: "El usuario ya existe" });
         const hashedPassword = await createHash(password);
-        const cart = await cartService.createCart();
+        const cart = await cartsService.createCart();
         const user = {
             first_name,
             last_name,
             email,
             password: hashedPassword,
             cart: cart._id,
-            avatar: `${req.protocol}://${req.hostname}:${process.env.PORT}/img/${file.filename}`
+            avatar: `${req.protocol}://${req.hostname}:${process.env.PORT}/img/${file.filename}`,
+            library: []
         }
         const result = await usersService.save(user);
         res.send({ status: "success", message: "Registrado" });
     } catch {
-        res.status(500).send({ status: "error", error: "Error al registrar nuevo usuario" })
-    }
+        res.status(500).send({ status: "error", error: "Error al registrar nuevo usuario" });
+    };
 };
 
 const login = async (req, res) => {
@@ -34,8 +35,8 @@ const login = async (req, res) => {
         id: user._id,
         email: user.email,
         role: user.role
-    }
-    res.send({ status: "success", message: "Logueado!" })
+    };
+    res.send({ status: "success", message: "Logueado!" });
 };
 
 const loginFail = async (req, res) => {
@@ -50,7 +51,7 @@ const gitHubCallback = async (req, res) => {
         id: user._id,
         email: user.email,
         role: user.role
-    }
+    };
     res.send({ status: "success", message: "Logueado con Git-Hub!" })
 };
 
@@ -60,7 +61,7 @@ const googleCallback = async (req, res) => {
         id: user._id,
         email: user.email,
         role: user.role
-    }
+    };
     res.send({ status: "success", message: "Logueado con Google!" })
 };
 
@@ -70,7 +71,7 @@ const facebookCallBack = async (req, res) => {
         id: user._id,
         email: user.email,
         role: user.role
-    }
+    };
     res.send({ status: "success", message: "Logueado con Facebook!" })
 };
 

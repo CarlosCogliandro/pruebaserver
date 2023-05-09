@@ -19,7 +19,7 @@ router.get('/register', viewsController.register );
 
 router.get('/profile', executePolicies(["AUTHENTICATED"]), viewsController.profile);
 
-router.get('/home', viewsController.home);
+// router.get('/home', viewsController.home);
 
 router.get('/logout', viewsController.logOut);
 

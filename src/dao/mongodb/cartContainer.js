@@ -1,6 +1,6 @@
 import cartModel from "./models/cart.model.js";
 
-export default class mongoCart {
+export default class mongoCarts {
 
     getCartById = (id, options = {}) => {
         if (options.populate)

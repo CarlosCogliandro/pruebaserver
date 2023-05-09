@@ -6,7 +6,7 @@
       <p
         class="m-0 flex-grow-1"
         style="font-size: large; text-align: center;"
-      >Welcome {{this.name}}</p>
+      >Welcome {{user.name}}</p>
       <div>
       <a href="./cart"><button class="btn btn-danger">Carrito</button></a>
       </div>
@@ -36,10 +36,14 @@
                     <td class="text-center text-light">{{this.description}}</td>
                     <td class="text-center text-light">$ {{this.price}}</td>
                     <td class="text-center text-light">{{this.stock}}</td>
-                    {{#if this.isValidToAdd}}
-                      <th><a href="http://localhost:8080/carts/product/{{this._id}}"><button>Agregar al carrito</button></a></th>
+                    {{#if this.inCart}}
+                      <th><button disabled>Ya se encuentra agregado en el carrito</button></th>
                     {{else}}
-                      <th><button disabled>Ya se encuentra agregado</button></th>
+                    {{#if this.inLibrary}}
+                      <th><button disabled>Ya se encuentra agregado en la biblioteca</button></th>
+                    {{else}}
+                      <th><a href="http://localhost:8080/carts/product/{{this._id}}"><button>Agregar al carrito</button></a></th>
+                    {{/if}}
                     {{/if}}
                 </tr>
                {{/each}}

@@ -1,18 +1,20 @@
 
-import { cartService, productsService } from "../dao/index.js";
+import { cartsService, historiesService, productsService, usersService } from "../dao/index.js";
 
 const productsGetAll = async (req, res) => {
 
     // el problema lo tengo con esto que no lee el .cart
-    // const cartId = req.session.user.cart;                    
-    // const cart = await cartService.getCartById(cartId);
-    // products = products.map(product => {
-    //     const exists = cart.products.some(v => v._id.toSting() === product._id.toSting());
-    //     return { ...product, isValidToAdd: !exists };
-    // });
+    const cartId = req.user.cart;
+    const user = await usersService.getBy({ _id: req.user._id });
+    const cart = await cartsService.getCartById(cartId);
+    products = products.map(product => {
+        const existsInCart = cart.products.some(v => v._id.toString() === product._id.toString());
+        const existsInLibrary = user.library.some(p = p._id.toString() === product._id.toString());
+        return { ...product, inCart: existsInCart, inLibrary: existsInLibrary };
+    });
     // ----------------------
 
-    
+
     const page = req.query.page || 1;
     const pagination = await productsService.getAll({}, page);
     let products = pagination.docs;
@@ -24,7 +26,7 @@ const productsGetAll = async (req, res) => {
         page: pagination.page
     };
 
-    
+
     res.render('home', { products, paginationData });
 }
 
@@ -33,8 +35,8 @@ const createProduct = (req, res) => {
 };
 
 const cart = async (req, res) => {
-    const cartId = req.session.user.cart;
-    const cart = await cartService.getCartById(cartId, { populate: true });
+    const cartId = req.user.cart;
+    const cart = await cartsService.getCartById(cartId, { populate: true });
     const name = req.user.name;
     const products = cart.products.map(product => product._id);
     res.render('cart', {
@@ -47,20 +49,21 @@ const cart = async (req, res) => {
 // ------------------------------------------------------------------
 
 const login = (req, res) => {
-    res.render('login', {css: 'login'});
+    res.render('login', { css: 'login' });
 };
 
 const register = (req, res) => {
-    res.render('register', {css: 'register'});
+    res.render('register', { css: 'register' });
 };
 
-const profile = (req, res) => {
-    res.render('profile', { user: req.session.user });
+const profile = async (req, res) => {
+    const history = await historiesService.getHistoryBy({ user: req.user.id })
+    res.render('profile', { user: req.user, events: history ? history.events : [] });
 };
 
-const home = async (req, res) => {
-    res.render('home', { user: req.session.user });
-};
+// const home = async (req, res) => {
+//     res.render('home', { user: req.user });
+// };
 
 const chat = async (req, res, next) => {
     res.render('chat', {})
@@ -93,7 +96,7 @@ export default {
     login,
     register,
     profile,
-    home,
+    // home,
     chat,
     logOut,
     info

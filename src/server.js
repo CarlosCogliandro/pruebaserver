@@ -1,12 +1,13 @@
 import express from "express";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import session from "express-session";
-import MongoStore from "connect-mongo";
-import passport from "passport";
 import handlebars from 'express-handlebars';
 
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
 import initializeStrategies from "./config/passport.config.js";
+import passport from 'passport';
 import { addLoger, levels } from './middleware/logger.js';
 
 import productsRouter from './routes/products.router.js';
@@ -24,7 +25,7 @@ const PORT = config.app.PORT;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public`));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(cors());
 app.use(session({
     store: MongoStore.create({
@@ -42,7 +43,7 @@ app.use(session({
 // Passport
 initializeStrategies();
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
 
 // Engine
 app.engine('handlebars',handlebars.engine());
@@ -50,15 +51,14 @@ app.set('views',`${__dirname}/views`);
 app.set('view engine','handlebars');
 
 //Routers
-app.use('/carts', cartRouter);
-app.use('/products', productsRouter)
-app.use('/sessions', sessionsRouter);
 app.use('/', viewsRouter);
+app.use('/sessions', sessionsRouter);
+app.use('/products', productsRouter);
+app.use('/carts', cartRouter);
 
 app.get('/current', (req, res) => {
-    console.log(req.session);
-    res.send(req.session.user);
-})
+    res.send(req.user);
+});
 
 //App Use - LOGGER 
 app.use(addLoger);
@@ -66,11 +66,11 @@ app.use(addLoger);
 app.get('/pruebaLogger', (req, res) => {
     levels;
     res.send("ok");
-})
+});
 
 app.get('/peticion',(req,res)=>{
-    res.send(`Petición atendida por ${process.pid}`)
-})
+    res.send(`Petición atendida por ${process.pid}`);
+});
 
 // Conexion al servidor
 const connectedServer = app.listen(PORT, () => console.log(`Server ON By Carlos Cogliandro------> http://localhost:${PORT}`));

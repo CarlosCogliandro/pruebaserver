@@ -99,7 +99,6 @@ const initializeStrategies = () => {
         clientID: config.facebook.FACEBOOK_USER,
         clientSecret: config.facebook.FACEBOOK_PWD,
         callbackURL: 'http://localhost:8080/sessions/facebookcallback',
-        // profileFields: ['displayName', 'email'],
     }, async (accessToken, refreshToken, profile, done) => {
         const id = profile.id
         const firstName = profile.name.givenName;
