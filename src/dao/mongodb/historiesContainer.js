@@ -1,4 +1,4 @@
-import historyModel from "./models/history.js";
+import historyModel from "./models/history.model.js";
 
 export default class mongoHistories {
 

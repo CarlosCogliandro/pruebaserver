@@ -4,20 +4,17 @@ import { cartsService, historiesService, productsService, usersService } from ".
 const productsGetAll = async (req, res) => {
 
     // el problema lo tengo con esto que no lee el .cart
-    const cartId = req.user.cart;
-    const user = await usersService.getBy({ _id: req.user._id });
-    const cart = await cartsService.getCartById(cartId);
-    products = products.map(product => {
-        const existsInCart = cart.products.some(v => v._id.toString() === product._id.toString());
-        const existsInLibrary = user.library.some(p = p._id.toString() === product._id.toString());
-        return { ...product, inCart: existsInCart, inLibrary: existsInLibrary };
-    });
-    // ----------------------
-
-
     const page = req.query.page || 1;
+    // const cartId = req.user.cart;
     const pagination = await productsService.getAll({}, page);
     let products = pagination.docs;
+    // const cart = await cartsService.getCartById(cartId);
+    // const user = await usersService.getBy({ _id: req.user._id });
+    // products = products.map(product => {
+    //     const existsInCart = cart.products.some(v => v._id.toString() === product._id.toString());
+    //     const existsInLibrary = user.library.some(p = p._id.toString() === product._id.toString());
+    //     return { ...product, inCart: existsInCart, inLibrary: existsInLibrary };
+    // });
     const paginationData = {
         hasPrevPage: pagination.hasPrevPage,
         hasNextPage: pagination.hasNextPage,
@@ -25,8 +22,6 @@ const productsGetAll = async (req, res) => {
         nextPage: pagination.nextPage,
         page: pagination.page
     };
-
-
     res.render('home', { products, paginationData });
 }
 

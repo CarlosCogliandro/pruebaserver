@@ -13,22 +13,13 @@ router.post('/login', passport.authenticate('login', { failureRedirect: '/sessio
 router.get('/loginFail', sessionsController.loginFail);
 
 router.get('/github', passport.authenticate('github'), (req, res) => { })
-router.get('/githubcallback', passport.authenticate('github', {
-    successRedirect: '/home',
-    failureRedirect: '/login'
-}), sessionsController.gitHubCallback);
+router.get('/githubcallback', passport.authenticate('github', { session: false }), sessionsController.gitHubCallback);
 
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }), async (req, res) => { });
-router.get('/googlecallback', passport.authenticate('google', {
-    successRedirect: '/home',
-    failureRedirect: '/login'
-}), sessionsController.googleCallback);
+router.get('/googlecallback', passport.authenticate('google', { session: false }), sessionsController.googleCallback);
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
-router.get('/facebookcallback', passport.authenticate('facebook', {
-    successRedirect: '/home',
-    failureRedirect: '/login'
-}), sessionsController.facebookCallBack);
+router.get('/facebookcallback', passport.authenticate('facebook', { session: false }), sessionsController.facebookCallBack);
 
 router.post('/logintoken', sessionsController.logintoken);
 
